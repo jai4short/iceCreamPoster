@@ -107,7 +107,7 @@ public class SendHttpRequest {
 		
 	}
 	
-	public void sendPost(String url, List<NameValuePair> params1, List<NameValuePair> params2) throws ClientProtocolException, IOException, ScriptException{
+	public void sendPost(String url, List<NameValuePair> params1, List<NameValuePair> params2, long wait) throws ClientProtocolException, IOException, ScriptException, InterruptedException{
 		//create cookie manager object
 		CookieStore httpCookieStore = new BasicCookieStore();
 		
@@ -130,6 +130,10 @@ public class SendHttpRequest {
 		HttpResponse response = client.execute(post);
 		
 		printResponseData(response, httpCookieStore);
+		
+		System.out.println("waiting " + wait/1000 + "seconds before next post");
+		
+		Thread.sleep(wait);
 		
 		post2.setEntity(new UrlEncodedFormEntity(params2));
 		
